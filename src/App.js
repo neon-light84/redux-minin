@@ -1,15 +1,32 @@
 import './App.css';
 import {Component} from "react";
 
+import {connect} from "react-redux";
 
 class App extends Component {
+    updateCounter(value) {
+
+    }
+
     render() {
+        console.log('APP', this.props);
         return (
             <div>
-                <h2>Тут будет редакс</h2>
+                <h1>Счетчик <strong>{this.props.counter}</strong></h1>
+                <hr/>
+                <div>
+                    <button onClick={() => {this.updateCounter(1)}}>Добавить 1</button>
+                    <button onClick={() => {this.updateCounter(-1)}}>Вычесть 1</button>
+                </div>
             </div>
         );
     }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        counter: state.counter
+    }
+}
+
+export default connect(mapStateToProps)(App);
