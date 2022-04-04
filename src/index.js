@@ -6,10 +6,26 @@ import reportWebVitals from './reportWebVitals';
 
 import {Provider} from 'react-redux';
 import rootReducer from "./redux/rootReducer";
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 
+// function loggerMiddleware(store) {
+//     return function (next) {
+//         return function (action) {
+//             const result = next(action);
+//             console.log('Middleware', store.getState());
+//             return result;
+//         }
+//     }
+// }
 
-const store = createStore(rootReducer);
+// тоже самое, но в сокращенном синтаксисе
+const loggerMiddleware = store => next => action => {
+    const result = next(action);
+    console.log('Middleware', store.getState());
+    return result;
+}
+
+const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
 
 ReactDOM.render(
   // <React.StrictMode>
